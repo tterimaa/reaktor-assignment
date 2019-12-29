@@ -1,5 +1,5 @@
 const fetchData = async () => {
-    const data = await fetch('./status.real', { mode: 'no-cors' });
+    const data = await fetch('https://localhost:8000/');
     console.log(data);
 }
 
