@@ -1,11 +1,13 @@
 var express = require('express');
 var fs = require('fs');
-
+var cors = require('cors');
 var app = express();
+
+app.use(cors());
 
 var PORT = 3000;
 
-app.get('/', function(req, res) {
+app.get('/api/data.json', function(req, res) {
     const rawData = fs.readFileSync('./status.real', { encoding: 'utf-8'});
     let dataArray = rawData.split('\n\n');
     const parsed = dataArray.reduce((accumulator, current) => {
@@ -24,8 +26,8 @@ app.get('/', function(req, res) {
 
         return accumulator;
     }, [])
-
-    res.json(parsed);
+    console.log(parsed);
+    res.status(200).json(parsed);
 });
 
 app.listen(PORT, function() {
