@@ -1,5 +1,4 @@
 'use-strict'
-const baseUrl = '/api/data.json';
 
 window.onload = function() {
 
@@ -7,7 +6,7 @@ window.onload = function() {
     console.log(rootElement);
 
     const fetchData = async () => {
-        const res = await fetch(baseUrl);
+        const res = await fetch('http://localhost:3000/api/data.json');
         return await res.json();
     }
 
@@ -20,5 +19,5 @@ window.onload = function() {
         })
         rootElement.appendChild(ul);
     });
-
+    
 }
