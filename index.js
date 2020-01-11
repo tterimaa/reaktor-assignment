@@ -4,7 +4,6 @@ const baseUrl = '/api/data.json';
 window.onload = function() {
 
     const rootElement = document.querySelector('#root');
-    console.log(rootElement);
 
     const fetchData = async () => {
         const res = await fetch(baseUrl);

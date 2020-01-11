@@ -4,14 +4,15 @@ var cors = require('cors');
 var app = express();
 
 app.use(cors());
-app.use(express.static('public'));
+app.use(express.static('.'));
 
-var PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
+const filePath = './status.real';
 
 app.get('/api/data.json', function(req, res) {
-    const rawData = fs.readFileSync('./status.real', { encoding: 'utf-8'});
+    const rawData = fs.readFileSync(filePath, { encoding: 'utf-8'});
     let dataArray = rawData.split('\n\n');
-    const parsed = dataArray.reduce((accumulator, current) => {
+    let parsed = dataArray.reduce((accumulator, current) => {
         let filtered = current.split('\n').filter(line => line.startsWith('Package') || line.startsWith('Depends') || line.startsWith('Description'));
         if(filtered.length === 0) return accumulator;
 
@@ -27,7 +28,6 @@ app.get('/api/data.json', function(req, res) {
 
         return accumulator;
     }, [])
-    console.log(parsed);
     res.status(200).json(parsed);
 });
 
