@@ -9,6 +9,8 @@ app.use(express.static('.'));
 const PORT = process.env.PORT || 3001;
 const filePath = './status.real';
 
+app.get('/favicon.ico', (req, res) => res.status(204));
+
 app.get('/api/data.json', function(req, res) {
     const rawData = fs.readFileSync(filePath, { encoding: 'utf-8'});
     let dataArray = rawData.split('\n\n');
