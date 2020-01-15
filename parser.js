@@ -3,7 +3,21 @@
 const parseData = rawData => {
     let strings = rawData.split('\n\n');
     let parsed = parseStrings(strings);
-    return parsed;
+    let parsedWithDeps = parseDeps(parsed)
+    return parsedWithDeps;
+}
+
+const parseDeps = data => {
+    let withDeps = data.reduce((accumulator, current) => {
+        if(!current.Depends) {
+            accumulator.push(current);
+            return accumulator;
+        }
+        current.Depends = current.Depends.split(',');
+        accumulator.push(current);
+        return accumulator;
+    }, [])
+    return withDeps;
 }
 
 const parseStrings = array => {
