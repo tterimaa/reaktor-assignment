@@ -11,6 +11,7 @@ window.onload = function() {
     }
 
     fetchData().then(res => {
+        console.log(res);
         const ul = document.createElement('ul');
         res.map(e => {
             const li = document.createElement('li');

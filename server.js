@@ -1,7 +1,8 @@
-var express = require('express');
-var fs = require('fs');
-var cors = require('cors');
-var app = express();
+const express = require('express');
+const fs = require('fs');
+const cors = require('cors');
+const app = express();
+const parseData = require('./parser');
 
 app.use(cors());
 app.use(express.static('.'));
@@ -13,24 +14,8 @@ app.get('/favicon.ico', (req, res) => res.status(204));
 
 app.get('/api/data.json', function(req, res) {
     const rawData = fs.readFileSync(filePath, { encoding: 'utf-8'});
-    let dataArray = rawData.split('\n\n');
-    let parsed = dataArray.reduce((accumulator, current) => {
-        let filtered = current.split('\n').filter(line => line.startsWith('Package') || line.startsWith('Depends') || line.startsWith('Description'));
-        if(filtered.length === 0) return accumulator;
-
-        let entry = {};
-        
-        filtered.forEach(line => {
-            const key = line.slice(0, line.indexOf(':'));
-            const value = line.slice(line.indexOf(':') + 1).trim();
-            entry[key] = value;
-        })
-
-        accumulator.push(entry);
-
-        return accumulator;
-    }, [])
-    res.status(200).json(parsed);
+    const parsedData = parseData(rawData);
+    res.status(200).json(parsedData);
 });
 
 app.listen(PORT, function() {
