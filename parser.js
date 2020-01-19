@@ -19,7 +19,7 @@ const parseData = rawData => {
             entry[keyValue[0]] = value;
         })
 
-        accumulator.push(entry);
+        entry.hasOwnProperty('Depends') ? accumulator.push(entry) : accumulator.push({...entry, Depends: { normal: [], alt: []}});
         return accumulator;
     }, []);
     return parsed;
