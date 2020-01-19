@@ -3,23 +3,19 @@
 const baseUrl = '/api/data.json';
 
 window.onload = function() {
+    fetch(baseUrl).then(res => {
+        res.json().then(json => createView(json));
+    })
+}
 
+const createView = data => {
+    console.log(data);
     const rootElement = document.querySelector('#root');
-
-    const fetchData = async () => {
-        const res = await fetch(baseUrl);
-        return await res.json();
-    }
-
-    fetchData().then(res => {
-        console.log(res);
-        const ul = document.createElement('ul');
-        res.map(e => {
-            const li = document.createElement('li');
-            li.textContent = e.Package;
-            ul.appendChild(li);
-        })
-        rootElement.appendChild(ul);
-    });
-
+    const ul = document.createElement('ul');
+    data.map(e => {
+        const li = document.createElement('li');
+        li.textContent = e.Package;
+        ul.appendChild(li);
+    })
+    rootElement.appendChild(ul);
 }
