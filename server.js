@@ -14,8 +14,8 @@ app.get('/favicon.ico', (req, res) => res.status(204));
 
 app.get('/api/data.json', function(req, res) {
     const rawData = fs.readFileSync(filePath, { encoding: 'utf-8'});
-    const parsedData = parseData(rawData);
-    res.status(200).json(parsedData);
+    const parsed = parseData(rawData);
+    res.status(200).json(parsed);
 });
 
 app.listen(PORT, function() {

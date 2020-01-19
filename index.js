@@ -1,4 +1,5 @@
 'use-strict'
+
 const baseUrl = '/api/data.json';
 
 window.onload = function() {
