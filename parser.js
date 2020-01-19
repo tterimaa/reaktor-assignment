@@ -9,7 +9,7 @@ const parseDescription = elementStr => {
     const idxMaintainer = elementStr.indexOf('Original-Maintainer:');
     const idxHomepage = elementStr.indexOf('Homepage:')
     const lastIndex = idxMaintainer < idxHomepage ? idxMaintainer : idxHomepage;
-    return elementStr.substring(elementStr.indexOf('Description:'), lastIndex);
+    return elementStr.substring(elementStr.indexOf('Description:'), lastIndex - 1);
 }
 
 const parseData = rawData => {
