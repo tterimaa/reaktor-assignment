@@ -1,21 +1,47 @@
 'use-strict'
 
 const baseUrl = '/api/data.json';
+let data = [];
 
 window.onload = function() {
     fetch(baseUrl).then(res => {
-        res.json().then(json => createView(json));
+        res.json().then(json => {
+            data = json;
+            createView(json)
+        });
     })
 }
 
 const createView = data => {
     console.log(data);
-    const rootElement = document.querySelector('#root');
+    const packages = document.querySelector('#packages');
     const ul = document.createElement('ul');
     data.map(e => {
-        const li = document.createElement('li');
-        li.textContent = e.Package;
-        ul.appendChild(li);
+        ul.appendChild(newElement('li', e.Package, newListener(e.Package)));
     })
-    rootElement.appendChild(ul);
+    packages.appendChild(ul);
+}
+
+const newListener = packageName => {
+    return listener = () => {
+        console.log('Package', packageName, 'clicked');     
+        renderInfo(packageName);
+    }
+}
+
+const renderInfo = name => {
+    const info = document.querySelector('#info');
+    const package = data.find(e => e.Package === name);
+    info.appendChild(newElement('h1', package.Package));
+    info.appendChild(newElement('p', package.Description));
+}
+
+const newElement = (type, content, listener) => {
+    const element = document.createElement(type);
+    element.textContent = content;
+    if (listener) element.addEventListener('click', e => {
+        e.preventDefault();
+        listener();
+    })
+    return element;
 }
