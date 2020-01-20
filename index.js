@@ -34,12 +34,25 @@ const renderInfo = name => {
     const package = data.find(e => e.Package === name);
     info.appendChild(newElement('h1', package.Package));
     info.appendChild(newElement('p', package.Description));
-    const normalDeps = document.createElement('ul');
-    const altDeps = document.createElement('ul');
-    package.Depends.normal.map(dep => normalDeps.appendChild(newElement('li', dep, newListener(dep))));
-    package.Depends.alt.map(dep => altDeps.appendChild(newElement('li', dep, newListener(dep))));
-    info.appendChild(normalDeps);
-    info.appendChild(altDeps);
+    renderDeps(package.Depends.normal, 'Dependencies', info);
+    renderDeps(package.Depends.alt, 'Alternative dependencies', info);
+    // const normalDeps = document.createElement('ul');
+    // const altDeps = document.createElement('ul');
+    // info.appendChild(newElement('h4', 'Dependencies'));
+    // package.Depends.normal.map(dep => normalDeps.appendChild(newElement('li', dep, newListener(dep))));
+    // info.appendChild(normalDeps);
+    // info.appendChild(newElement('h4', 'Alternative dependencies'));
+    // package.Depends.alt.map(dep => altDeps.appendChild(newElement('li', dep, newListener(dep))));
+    // info.appendChild(altDeps);
+}
+
+const renderDeps = (deps, headerText, element) => {
+    if (deps.length === 0) return;
+    const header = newElement('h4', headerText);
+    const depsList = document.createElement('ul');
+    deps.map(dep => depsList.appendChild(newElement('li', dep, newListener(dep))));
+    element.appendChild(header);
+    element.appendChild(depsList);
 }
 
 const cleanInfo = element => {
