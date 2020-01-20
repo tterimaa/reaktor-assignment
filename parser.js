@@ -1,7 +1,7 @@
 const parseDeps = depsStr => {
     const deps = depsStr.split(', ');
-    const normal = deps.filter(d => !d.includes('|')).map(d => d.slice(0, d.indexOf(' ')));
-    const alt = deps.filter(d => d.includes('|')).map(d => d.split(' | ')).flat().map(d => d.slice(0, d.indexOf(' ')));
+    const normal = deps.filter(d => !d.includes('|')).map(d => d.slice(0, d.indexOf(' ') < 0 ? d.lenght : d.indexOf(' ')));
+    const alt = deps.filter(d => d.includes('|')).map(d => d.split(' | ')).flat().map(d => d.slice(0, d.indexOf(' ') < 0 ? d.lenght : d.indexOf(' ')));
     return { normal, alt };
 }
 
