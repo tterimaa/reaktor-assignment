@@ -9,7 +9,6 @@ const parseDescription = elementStr => {
     const idxMaintainer = elementStr.indexOf('Original-Maintainer:');
     const idxHomepage = elementStr.indexOf('Homepage:');
     const lastIndex = idxMaintainer === -1 && idxHomepage === -1 ? null : idxMaintainer > -1 && idxHomepage > -1 ? Math.min(idxHomepage, idxMaintainer) : Math.max(idxHomepage, idxMaintainer);
-    console.log(lastIndex);
     return lastIndex ? elementStr.substring(elementStr.indexOf('Description: '), lastIndex - 1).replace('Description: ', '') : elementStr.substring(elementStr.indexOf('Description: ')).replace('Description: ', '');
 }
 
